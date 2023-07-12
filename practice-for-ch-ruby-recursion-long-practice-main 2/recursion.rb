@@ -66,56 +66,64 @@ end
 a=[]
 
 
-p a.deep_dup([1,[4],[7,[2]]])
+# p a.deep_dup([1,[4],[7,[2]]])
 
 
 def fibonacci(n)
 
-  return[0] if n == 1 
+  return[0] if n == 1
   return [0,1] if n == 2
 
 
   recurred = fibonacci(n - 1)
 
-  recurred << recurred[-1] + recurred[-2] 
+  recurred << recurred[-1] + recurred[-2]
 
 end
 
 # p fibonacci(4)  #2
 
 
-# debugger  
+# debugger
 def binary_search(array, target)
-    left = 0 
-    right = array.length -1
+    left = 0
+    right = array.length-1
     mid = array.length / 2
-    
-    while left < right 
+
+    return false if array.empty?
+    return false if (mid == left && mid == right ) && array[mid] != target
 
       if array[mid] == target
 
-        return mid
+        return true
 
       elsif array[mid] < target
 
-        binary_search(array[mid + 1..right],target)
+        binary_search(array[mid+1..-1],target)
 
       else
 
-        binary_search(array[left..mid -1],target)
+        binary_search(array[0..mid-1],target)
 
       end
 
-      nil
-      
-    end
 
 end
 
-p binary_search([1, 2, 3], 1) # => 0
-# p binary_search([2, 3, 4, 5], 3) # => 1
-# p binary_search([2, 4, 6, 8, 10], 6) # => 2
-# p binary_search([1, 3, 4, 5, 9], 5) # => 3
-# p binary_search([1, 2, 3, 4, 5, 6], 6) # => 5
-# p binary_search([1, 2, 3, 4, 5, 6], 0) # => nil
-# p binary_search([1, 2, 3, 4, 5, 7], 6) # => nil
+def binary_search_helper(array, target)
+  if binary_search(array, target)
+    return array.index(target)
+  else
+    nil
+  end
+end
+
+p binary_search_helper([1, 2, 3], 1) # => 0
+p binary_search_helper([2, 3, 4, 5], 3) # => 1
+p binary_search_helper([2, 4, 6, 8, 10], 6) # => 2
+p binary_search_helper([1, 3, 4, 5, 9], 5) # => 3
+p binary_search_helper([1, 2, 3, 4, 5, 6], 6) # => 5
+p binary_search_helper([1, 2, 3, 4, 5, 6], 0) # => nil
+p binary_search_helper([1, 2, 3, 4, 5, 7], 6) # => nil
+
+
